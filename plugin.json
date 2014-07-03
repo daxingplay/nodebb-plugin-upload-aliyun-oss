@@ -8,10 +8,9 @@
         "aliyun-oss": "public"
     },
     "hooks": [
-        { "hook": "action:app.load", "method": "init", "callbacked": true },
-        { "hook": "filter:admin.header.build", "method": "admin.menu", "callbacked": false },
-        { "hook": "filter:admin.create_routes", "method": "admin.route", "callbacked": true },
-        { "hook": "filter:uploadImage", "method": "upload", "callbacked": true, "priority": 6 }
+        { "hook": "action:app.load", "method": "init" },
+        { "hook": "filter:admin.header.build", "method": "admin.menu" },
+        { "hook": "filter:uploadImage", "method": "upload", "priority": 6 }
 
     ],
     "minver": "0.4.0",

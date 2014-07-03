@@ -1,6 +1,6 @@
 {
-  "name": "nodebb-plugin-aliyun-oss",
-  "version": "0.1.4",
+  "name": "nodebb-plugin-upload-aliyun-oss",
+  "version": "0.0.1",
   "description": "A Plugin that uploads images to aliyun oss",
   "main": "index.js",
   "scripts": {
@@ -11,12 +11,12 @@
     "plugin",
     "aliyun-oss"
   ],
-  "author": "Nelson (justmepzy@gmail.com)",
+  "author": "daxingplay (daxingplay@gmail.com)",
   "license": "BSD-2-Clause",
   "dependencies": {
     "request": "^2.34.0",
     "winston": "~0.7.2",
     "aliyun-sdk" : "*"
   },
-  "repository": "https://github.com/justmepzy/nodebb-plugin-aliyun-oss"
+  "repository": "https://github.com/daxingplay/nodebb-plugin-upload-aliyun-oss"
 }

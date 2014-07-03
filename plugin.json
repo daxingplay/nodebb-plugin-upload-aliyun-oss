@@ -1,5 +1,5 @@
 {
-    "id": "nodebb-plugin-aliyun-oss",
+    "id": "nodebb-plugin-upload-aliyun-oss",
     "name": "Aliyun OSS Upload Plugin",
     "description": "A Plugin that uploads images to Aliyun OSS",
     "url": "https://github.com/justmepzy/nodebb-plugin-aliyun-oss",

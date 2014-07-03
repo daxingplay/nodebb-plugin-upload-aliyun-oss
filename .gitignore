@@ -11,4 +11,4 @@ Vagrantfile
 .vagrant
 provision.sh
 *.komodoproject
-
+*.iml

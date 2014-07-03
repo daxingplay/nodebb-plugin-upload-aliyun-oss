@@ -12,36 +12,56 @@ var request = require('request'),
 
 
 (function(aliyunOss) {
-    var accessKeyId = '',
-        secretAccessKey = '',
-        bucket = '',
-        domain = '';
+    var ossConfig = {};
 
-    db.getObjectFields("config",['aliyun-oss-accesskeyid','aliyun-oss-secretaccesskey','aliyun-oss-bucket','aliyun-oss-domain'],function(err,options) {
+    db.getObjectFields("config", function(err,options) {
         if(err) {
             return winston.error(err.message);
         }
-        accessKeyId = options['aliyun-oss-accesskeyid'];
-        secretAccessKey = options['aliyun-oss-secretaccesskey'];
-        bucket = options['aliyun-oss-bucket'];
-        domain = options['aliyun-oss-domain']
+        ossConfig = options;
     });
 
     aliyunOss.init = function(app, middleware, controllers) {
+        app.get('/admin/plugins/upload-aliyun-oss', middleware.admin.buildHeader, renderAdmin);
+        app.get('/api/admin/plugins/upload-aliyun-oss', renderAdmin);
 
+        app.post('/api/admin/plugins/upload-aliyun-oss/save', save);
 	};
 
+    function renderAdmin(req, res, next) {
+        db.getObjectField('nodebb-plugin-upload-aliyun-oss', ['domain','bucket','accessKeyId','secretAccessKey'], function(err, policy) {
+            if (err) {
+                return next(err);
+            }
+
+            res.render('admin/plugins/upload-aliyun-oss', policy);
+        });
+    }
+
+    function save(req, res, next) {
+        if(req.body.ossConfig !== null && req.body.ossConfig !== undefined) {
+            db.setObject('nodebb-plugin-upload-aliyun-oss', req.body.ossConfig, function(err) {
+                if (err) {
+                    return next(err);
+                }
+
+                ossConfig = req.body.ossConfig;
+                res.json(200, {message: 'OSS Config saved!'});
+            });
+        }
+    }
+
     aliyunOss.upload = function (image, callback) {
-		if(!accessKeyId) {
+		if(!ossConfig.accessKeyId) {
 			return callback(new Error('invalid-aliyun-oss-access-key-id'));
 		}
-        if(!secretAccessKey) {
+        if(!ossConfig.secretAccessKey) {
             return callback(new Error('invalid-aliyun-oss-secret-access-key'));
         }
-        if(!bucket) {
+        if(!ossConfig.bucket) {
             return callback(new Error('invalid-aliyun-oss-bucket-name'))
         }
-        if(!domain) {
+        if(!ossConfig.domain) {
             return callback(new Error('invalid-aliyun-oss-domain'))
         }
 
@@ -49,7 +69,7 @@ var request = require('request'),
 			return callback(new Error('invalid image'));
 		}
 
-        uploadToOss(accessKeyId,secretAccessKey,bucket,domain, image, function(err, data) {
+        uploadToOss(ossConfig.accessKeyId, ossConfig.secretAccessKey, ossConfig.bucket, ossConfig.domain, image, function(err, data) {
             if(err) {
                 return callback(err);
             }
@@ -104,36 +124,16 @@ var request = require('request'),
 
 	var admin = {};
 
-	admin.menu = function(custom_header) {
+	admin.menu = function(custom_header, callback) {
 		custom_header.plugins.push({
-			route: '/plugins/aliyun-oss',
+			route: '/plugins/upload-aliyun-oss',
 			icon: 'fa-picture-o',
 			name: 'Aliyun OSS'
 		});
 
+        callback(null, custom_header);
 		return custom_header;
 	};
-
-    admin.route = function(custom_routes, callback){
-        fs.readFile(path.join(__dirname, './public/templates/admin/plugins/aliyunoss.tpl'), function(err, tpl) {
-            custom_routes.routes.push({
-                route: '/plugins/aliyun-oss',
-                method: "get",
-                options: function(req, res, callback) {
-                    callback({
-                        req: req,
-                        res: res,
-                        route: '/plugins/aliyun-oss',
-                        name: 'Aliyun OSS',
-                        content: tpl
-                    });
-                }
-            });
-
-            callback(null, custom_routes);
-        });
-    };
-
 
     aliyunOss.admin = admin;
 

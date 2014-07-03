@@ -132,7 +132,6 @@ var request = require('request'),
 		});
 
         callback(null, custom_header);
-		return custom_header;
 	};
 
     aliyunOss.admin = admin;

@@ -29,7 +29,7 @@ var request = require('request'),
 	};
 
     function renderAdmin(req, res, next) {
-        db.getObjectField('nodebb-plugin-upload-aliyun-oss', ['domain','bucket','accessKeyId','secretAccessKey'], function(err, policy) {
+        db.getObjectFields('nodebb-plugin-upload-aliyun-oss', ['domain','bucket','accessKeyId','secretAccessKey'], function(err, policy) {
             if (err) {
                 return next(err);
             }

@@ -15,5 +15,5 @@
     ],
     "minver": "0.4.0",
     "templates": "./public/templates",
-    "repository": "https://github.com/justmepzy/nodebb-plugin-aliyun-oss"
+    "repository": "https://github.com/daxingplay/nodebb-plugin-upload-aliyun-oss"
 }

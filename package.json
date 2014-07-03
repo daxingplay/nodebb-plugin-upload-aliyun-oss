@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-upload-aliyun-oss",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Plugin that uploads images to aliyun oss",
   "main": "index.js",
   "scripts": {

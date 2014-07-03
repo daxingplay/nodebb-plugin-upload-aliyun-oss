@@ -14,7 +14,7 @@ var request = require('request'),
 (function(aliyunOss) {
     var ossConfig = {};
 
-    db.getObject("config", function(err,options) {
+    db.getObject("nodebb-plugin-upload-aliyun-oss", function(err,options) {
         if(err) {
             return winston.error(err.message);
         }

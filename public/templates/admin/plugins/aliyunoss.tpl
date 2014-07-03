@@ -4,10 +4,10 @@
 <form role="form" class="form">
 	<div class="form-group">
         <label>Aliyun OSS Key</label>
-        <input id="aliyun-oss-domain" data-field="domain" type="text" class="form-control" placeholder="Enter Aliyun OSS Domain">
-        <input id="aliyun-oss-bucket" data-field="bucket" type="text" class="form-control" placeholder="Enter Aliyun OSS Bucket">
-        <input id="aliyun-oss-accesskeyid" data-field="accessKeyId" type="text" class="form-control" placeholder="Enter Aliyun OSS AccessKeyId">
-        <input id="aliyun-oss-secretaccesskey" data-field="secretAccessKey" type="text" class="form-control" placeholder="Enter Aliyun OSS SecretAccessKey">
+        <input id="aliyun-oss-domain" data-field="domain" type="text" class="form-control" placeholder="Enter Aliyun OSS Domain" value="{domain}">
+        <input id="aliyun-oss-bucket" data-field="bucket" type="text" class="form-control" placeholder="Enter Aliyun OSS Bucket" value="{bucket}">
+        <input id="aliyun-oss-accesskeyid" data-field="accessKeyId" type="text" class="form-control" placeholder="Enter Aliyun OSS AccessKeyId" value="{accessKeyId}">
+        <input id="aliyun-oss-secretaccesskey" data-field="secretAccessKey" type="text" class="form-control" placeholder="Enter Aliyun OSS SecretAccessKey" value="{secretAccessKey}">
     </div>
 	<button class="btn btn-lg btn-primary" id="save">Save</button>
 </form>

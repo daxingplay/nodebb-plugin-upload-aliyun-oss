@@ -34,7 +34,7 @@ var request = require('request'),
                 return next(err);
             }
 
-            res.render('admin/plugins/upload-aliyun-oss', policy);
+            res.render('admin/plugins/aliyunoss', policy);
         });
     }
 

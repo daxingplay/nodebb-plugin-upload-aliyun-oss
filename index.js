@@ -83,42 +83,29 @@ var request = require('request'),
 	};
 
 	function uploadToOss(accessKeyId,secretAccessKey,bucket,domain, image, callback) {
-        var ALY = require('./node_modules/aliyun-sdk/lib/aws');
-        ALY.config = {accessKeyId:accessKeyId,secretAccessKey:secretAccessKey};
-        //http://oss-cn-hangzhou.aliyuncs.com
-        var oss = new ALY.OSS({
-            endpoint: domain,
-            apiVersion: '2013-10-15'
-        });
-        fs.readFile(image.path,function(err,data) {
+        var OssEasy = require("oss-easy");
+        var oss = new OssEasy({
+            accessKeyId : accessKeyId,
+            accessKeySecret : secretAccessKey
+        }, bucket);
+
+        var hash = crypto.createHash('md5');
+        var hex = hash.update(image.name+(+ new Date()) + "" + Math.random()).digest('hex');
+        var dir = hex.slice(0,3),
+            sub = hex.slice(3,6),
+            name = hex.slice(6),
+            ext = image.name.split('.')[image.name.split(".").length-1];
+
+        var domain_none_http = domain.replace("http://","");
+        var object_name = dir + '/' + sub + '/' + name + '.' + ext;
+        var url = 'http://' + bucket + '.' + domain_none_http + '/' + object_name;
+
+        oss.uploadFile(image.path, object_name, function(err, data) {
             if(err) {
-                return callback(err)
+                console.log(err);
+                callback(err);
             }
-
-            var hash = crypto.createHash('md5');
-            var hex = hash.update(data+"").digest('hex');
-            var dir = hex.slice(0,3),
-                sub = hex.slice(3,6),
-                name = hex.slice(6),
-                ext = image.name.split('.')[image.name.split(".").length-1];
-
-            var domain_none_http = domain.replace("http://","");
-            var object_name = dir + '/' + sub + '/' + name + '.' + ext;
-            var url = 'http://' + bucket + '.' + domain_none_http + '/' + object_name;
-
-            oss.putObject({
-
-                Bucket : bucket,
-                Key : object_name,
-                Body : data,
-                ContentType : 'image/'+ext
-
-            },function(err,data){
-                if(err) {
-                    return callback(err)
-                }
-                callback(null,url)
-            })
+            callback(null,url);
         });
 	}
 

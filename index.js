@@ -14,7 +14,7 @@ var request = require('request'),
 (function(aliyunOss) {
     var ossConfig = {};
 
-    db.getObjectFields("config", function(err,options) {
+    db.getObject("config", function(err,options) {
         if(err) {
             return winston.error(err.message);
         }

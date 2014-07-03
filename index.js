@@ -98,7 +98,7 @@ var request = require('request'),
 
         var domain_none_http = domain.replace("http://","");
         var object_name = dir + '/' + sub + '/' + name + '.' + ext;
-        var url = 'http://' + bucket + '.' + domain_none_http + '/' + object_name;
+        var url = 'http://' + domain_none_http + '/' + object_name;
 
         oss.uploadFile(image.path, object_name, function(err, data) {
             if(err) {
